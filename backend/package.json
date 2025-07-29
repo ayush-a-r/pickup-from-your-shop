@@ -1,5 +1,5 @@
 {
-  "name": "order-from-your-shop",
+  "name": "pickup-from-your-shop",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.20.2",
