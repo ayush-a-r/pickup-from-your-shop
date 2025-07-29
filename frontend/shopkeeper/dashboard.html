@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopkeeper Dashboard</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <h2>Orders for <span id="shopName"></span></h2>
+  <div class="statbox">
+    <strong>Total Orders: <span id="total"></span></strong>
+    <strong>Completed: <span id="completed"></span></strong>
+  </div>
+  <ul id="orders"></ul>
+  <a class="btn" href="../index.html">Log Out</a>
+  <script src="../script.js"></script>
+  <script>
+    document.getElementById('shopName').textContent = localStorage.getItem('shopName') || '';
+    loadShopkeeperOrders();
+    loadStats();
+  </script>
+</body>
+</html>

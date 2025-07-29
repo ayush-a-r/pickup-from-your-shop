@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopkeeper Register</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <h2>Shopkeeper Registration</h2>
+  <form id="registerForm" class="card">
+    <label>Shop Name: <input class="input" name="shopName" required></label>
+    <label>Phone: <input class="input" name="phone" type="text" required></label>
+    <label>State: <input class="input" name="state" required></label>
+    <label>District: <input class="input" name="district" required></label>
+    <label>City/Village: <input class="input" name="city" required></label>
+    <label>Locality: <input class="input" name="locality" required></label>
+    <button class="primary" type="submit">Register</button>
+    <div class="form-links">
+      <a href="login.html" class="link">Shopkeeper Login</a>
+    </div>
+  </form>
+  <a class="btn" href="../index.html">Back to Home</a>
+  <script src="../script.js"></script>
+  <script>
+    handleShopkeeperRegister('#registerForm');
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customer Dashboard</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <h2>Place New Order</h2>
+  <form id="orderForm" class="card">
+    <label>State: <select id="state" class="input"></select></label>
+    <label>District: <select id="district" class="input"></select></label>
+    <label>City/Village: <select id="city" class="input"></select></label>
+    <label>Locality: <select id="locality" class="input"></select></label>
+    <label>Shop: <select id="shopkeeperId" class="input"></select></label>
+    <div id="itemsBlock">
+      <h3>Order Items</h3>
+      <div id="itemsList"></div>
+      <button type="button" class="btn" onclick="addItemField()">Add Item</button>
+    </div>
+    <label>Pickup Time: <input name="pickupTime" type="time" required class="input"></label>
+    <button type="submit" class="primary">Place Order</button>
+  </form>
+  <h2>My Orders</h2>
+  <ul id="myOrders"></ul>
+  <a href="../index.html" class="btn">Logout</a>
+  <script src="../script.js"></script>
+  <script>
+    requireCustomerLogin();
+    initAddressDropdowns();
+    ['state','district','city','locality'].forEach(f => {
+      document.getElementById(f).addEventListener('change', updateShopDropdown);
+    });
+    document.getElementById('orderForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const shopkeeperId = document.getElementById('shopkeeperId').value;
+      if(!shopkeeperId) return alert('Select a shop');
+      const pickupTime = this.pickupTime.value;
+      const items = [];
+      document.querySelectorAll('#itemsList > div').forEach(d => {
+        const name = d.querySelector('input[name="name"]').value;
+        const company = d.querySelector('input[name="company"]').value;
+        const quantity = (d.querySelector('input[name="quantity"]').value);
+        if (name && quantity) items.push({ name, company, quantity });
+      });
+      if (!items.length) return alert('Add at least one item.');
+      const customerId = localStorage.getItem('customerId');
+      const res = await fetch('http://localhost:5000/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify({ customerId, shopkeeperId, items, pickupTime })
+      });
+      if(res.ok) { alert('Order placed!'); loadMyOrders(); }
+    };
+    loadMyOrders();
+  </script>
+</body>
+</html>
