@@ -7,8 +7,15 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/shoporder', {
-  useNewUrlParser: true, useUnifiedTopology: true
+mongoose.connect(
+  process.env.MONGODB_URI
+);
+
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err.message);
+});
+mongoose.connection.once('open', () => {
+  console.log('MongoDB connected!');
 });
 
 app.use('/api/shopkeepers', require('./routes/shopkeepers'));
